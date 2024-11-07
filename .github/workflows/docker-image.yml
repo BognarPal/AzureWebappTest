@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4    
+
+    - name: Docker Login
+      uses: docker/login-action@v3.3.0
+      with:
+        registry: ghcr.io
+        username: bognarpal
+        password: ${{secrets.GHCR_TOKEN}}      
+    
+    - name: Build the Docker image
+      run: |
+        VERSION = $(date +%s)
+        docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test:$VERSION --tag ghcr.io/bognarpal/azure-webapp-test:latest
+        docker push ghcr.io/bognarpal/azure-webapp-test:latest
+        docker push ghcr.io/bognarpal/azure-webapp-test:$VERSION
+              
