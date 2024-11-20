@@ -47,4 +47,4 @@ jobs:
         app-name: 'bp-test-cicd'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_71fba68f48cf4f3187c9611020515e67 }}
-        images: ghcr.io/bognarpal/azure-webapp-test:{{$VERSION}}
+        images: ghcr.io/bognarpal/azure-webapp-test:${{ env.VERSION }}
