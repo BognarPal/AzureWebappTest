@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ "master" ]
 env:
-  VERSION: $(date +%s)
+  VERSION: 'x'
 
 
 jobs:
@@ -28,6 +28,7 @@ jobs:
     
     - name: Build the Docker image
       run: |
+        $VERSION = $(date +%s)
         docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test: ${{ env.VERSION }} --tag ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:$VERSION
