@@ -12,7 +12,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      
     steps:
     - uses: actions/checkout@v4    
 
@@ -36,16 +39,7 @@ jobs:
         docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test:$VERSION --tag ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:$VERSION
-        
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
