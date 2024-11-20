@@ -28,7 +28,6 @@ jobs:
     
     - name: Build the Docker image
       run: |
-        VERSION = 
         echo "VERSION=$(date +%s)" >> $GITHUB_ENV
         docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test:{{$VERSION}} --tag ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:latest
