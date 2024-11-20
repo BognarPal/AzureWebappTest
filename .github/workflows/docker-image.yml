@@ -22,10 +22,17 @@ jobs:
         registry: ghcr.io
         username: bognarpal
         password: ${{secrets.GHCR_TOKEN}}      
-    
-    - name: Build the Docker image
+
+    - name: Set docker image tag
       run: |
         echo "VERSION=$(date +%s)" >> $GITHUB_ENV
+
+    - name: Log the generated tag
+      run: |
+        echo "Docker image tag: $VERSION"
+        
+    - name: Build the Docker image
+      run: |
         docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test:$VERSION --tag ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:latest
         
