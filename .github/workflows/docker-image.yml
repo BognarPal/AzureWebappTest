@@ -29,7 +29,7 @@ jobs:
     - name: Build the Docker image
       run: |
         $VERSION = $(date +%s)
-        docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test: ${{ env.VERSION }} --tag ghcr.io/bognarpal/azure-webapp-test:latest
+        docker build . --file Dockerfile --tag ghcr.io/bognarpal/azure-webapp-test:${{ env.VERSION }} --tag ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:latest
         docker push ghcr.io/bognarpal/azure-webapp-test:$VERSION
 
@@ -48,4 +48,4 @@ jobs:
         app-name: 'bp-test-cicd'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_71fba68f48cf4f3187c9611020515e67 }}
-        images: ghcr.io/bognarpal/azure-webapp-test:latest
+        images: ghcr.io/bognarpal/azure-webapp-test:${{ env.VERSION }}
